@@ -18,9 +18,11 @@
    - **Region**: `Singapore` (日本に近い)
    - **Branch**: `main`
    - **Root Directory**: `mikan-project`
-   - **Runtime**: `Docker`
+   - **Runtime**: `Docker` ⚠️ **重要：必ずDockerを選択**
    - **Dockerfile Path**: `Dockerfile.render`
    - **Docker Context**: `.`
+   - **Build Command**: ⚠️ **空欄のまま（何も入力しない）**
+   - **Start Command**: ⚠️ **空欄のまま（何も入力しない）**
 
 ## 4. 環境変数設定
 Webサービスの「Environment」タブで以下を追加：
