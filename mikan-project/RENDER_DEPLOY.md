@@ -21,7 +21,7 @@
    - **Runtime**: `Docker` ⚠️ **重要：必ずDockerを選択**
    - **Dockerfile Path**: `Dockerfile.render`
    - **Docker Context**: `.`
-   - **Build Command**: ⚠️ **空欄のまま（何も入力しない）**
+   - **Build Command**: `echo "Building with Docker..."` （必須フィールドなのでダミーコマンドを入力）
    - **Start Command**: ⚠️ **空欄のまま（何も入力しない）**
 
 ## 4. 環境変数設定
