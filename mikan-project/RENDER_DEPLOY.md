@@ -22,7 +22,7 @@
    - **Dockerfile Path**: `Dockerfile.render`
    - **Docker Context**: `.`
    - **Build Command**: `echo "Building with Docker..."` （必須フィールドなのでダミーコマンドを入力）
-   - **Start Command**: ⚠️ **空欄のまま（何も入力しない）**
+   - **Start Command**: `/start.sh` ⚠️ **重要：これを入力してください** - Dockerfileで作成した起動スクリプトを実行
 
 ## 4. 環境変数設定
 Webサービスの「Environment」タブで以下を追加：
@@ -72,6 +72,12 @@ URLを共有すれば、誰でもアクセスできます。
 - ログを確認（「Logs」タブ）
 - 環境変数が正しく設定されているか確認
 - データベース接続情報を確認
+- **RuntimeがDockerになっているか確認**（Settingsタブで確認）
+- **Start Commandが`/start.sh`になっているか確認**（Settingsタブで確認）
+
+### `/usr/bin/supervisord: No such file or directory` エラー
+- RenderのSettingsタブで**Start Command**を確認
+- Start Commandに`/usr/bin/supervisord -c /etc/supervisord.conf`が設定されている場合は、**`/start.sh`に変更**してください
 
 ### データベース接続エラー
 - PostgreSQLのInternal Database URLを使用
