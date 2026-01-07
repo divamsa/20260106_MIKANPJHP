@@ -1,0 +1,222 @@
+{
+  "rules": [
+    {
+      "name": "Use button tag for all buttons",
+      "description": "すべてのボタン要素には<button>タグを使用する。divやspanをボタンとして使用しない。",
+      "pattern": "Use <button> elements for all interactive buttons. Never use <div> or <span> elements with click handlers as buttons. Always use semantic <button> tags with appropriate type attributes (button, submit, reset).",
+      "examples": {
+        "bad": [
+          "<div onClick={handleClick}>Click me</div>",
+          "<span className='button' onClick={handleClick}>Submit</span>"
+        ],
+        "good": [
+          "<button type='button' onClick={handleClick}>Click me</button>",
+          "<button type='submit' className='button'>Submit</button>"
+        ]
+      }
+    },
+    {
+      "name": "BEM naming convention for CSS classes",
+      "description": "CSSクラス名はBEM（Block Element Modifier）命名規則に従う。",
+      "pattern": "Follow BEM (Block Element Modifier) naming convention for all CSS class names. Format: block__element--modifier. Use single underscores for elements and double hyphens for modifiers. Keep block names lowercase and use hyphens to separate words.",
+      "examples": {
+        "bad": [
+          "className='button primary'",
+          "className='cardTitle'",
+          "className='menu-item-active'"
+        ],
+        "good": [
+          "className='button button--primary'",
+          "className='card__title'",
+          "className='menu__item menu__item--active'"
+        ]
+      }
+    },
+    {
+      "name": "WAI-ARIA compliance",
+      "description": "すべてのHTMLタグはWAI-ARIA対応にする。適切なaria属性を使用してアクセシビリティを確保する。",
+      "pattern": "Ensure all HTML elements are WAI-ARIA compliant. Use appropriate ARIA attributes (aria-label, aria-labelledby, aria-describedby, aria-hidden, role, etc.) to improve accessibility. Interactive elements must have accessible names. Form inputs must have associated labels. Buttons must have descriptive text or aria-label.",
+      "examples": {
+        "bad": [
+          "<button><span>×</span></button>",
+          "<div onClick={handleClick}>Menu</div>",
+          "<input type='text' />"
+        ],
+        "good": [
+          "<button aria-label='Close dialog'><span aria-hidden='true'>×</span></button>",
+          "<button aria-label='Open menu' onClick={handleClick}>Menu</button>",
+          "<label htmlFor='username'>Username</label><input type='text' id='username' aria-required='true' />"
+        ]
+      }
+    },
+    {
+      "name": "Use semantic HTML",
+      "description": "セマンティックHTMLを使用する。適切なHTML5セマンティック要素（header, nav, main, article, section, aside, footer等）を使用する。",
+      "pattern": "Use semantic HTML5 elements instead of generic div/span elements. Use <header>, <nav>, <main>, <article>, <section>, <aside>, <footer> for page structure. Use <h1> through <h6> for headings in proper hierarchy. Use <p> for paragraphs, <ul>/<ol> for lists, <table> for tabular data, <form> for forms.",
+      "examples": {
+        "bad": [
+          "<div className='header'>...</div>",
+          "<div className='content'>...</div>",
+          "<div>Title</div>"
+        ],
+        "good": [
+          "<header className='header'>...</header>",
+          "<main className='content'>...</main>",
+          "<h1 className='title'>Title</h1>"
+        ]
+      }
+    },
+    {
+      "name": "Error handling",
+      "description": "適切なエラーハンドリングを実装する。try-catchブロックを使用し、ユーザーフレンドリーなエラーメッセージを表示する。",
+      "pattern": "Always implement proper error handling. Use try-catch blocks for async operations and error boundaries for React components. Display user-friendly error messages. Never expose sensitive error details to users. Log errors appropriately for debugging.",
+      "examples": {
+        "bad": [
+          "const data = await fetch(url);",
+          "function handleSubmit() { saveData(); }"
+        ],
+        "good": [
+          "try { const data = await fetch(url); } catch (error) { console.error(error); showUserMessage('データの取得に失敗しました'); }",
+          "async function handleSubmit() { try { await saveData(); } catch (error) { handleError(error); } }"
+        ]
+      }
+    },
+    {
+      "name": "Security best practices",
+      "description": "セキュリティのベストプラクティスに従う。XSS対策、入力検証、認証・認可を適切に実装する。",
+      "pattern": "Follow security best practices. Sanitize user inputs to prevent XSS attacks. Validate all inputs on both client and server side. Use HTTPS for all network requests. Never expose API keys or secrets in client-side code. Implement proper authentication and authorization. Use Content Security Policy (CSP) headers. Escape user-generated content before rendering.",
+      "examples": {
+        "bad": [
+          "<div dangerouslySetInnerHTML={{__html: userInput}} />",
+          "const apiKey = 'secret-key-123';",
+          "<img src={userInput} />"
+        ],
+        "good": [
+          "<div>{sanitizeHtml(userInput)}</div>",
+          "const apiKey = process.env.REACT_APP_API_KEY;",
+          "<img src={sanitizeUrl(userInput)} alt='User content' />"
+        ]
+      }
+    },
+    {
+      "name": "Performance optimization",
+      "description": "パフォーマンスを最適化する。画像の最適化、コード分割、メモ化、不要な再レンダリングの防止を行う。",
+      "pattern": "Optimize performance. Use lazy loading for images and components. Implement code splitting for large applications. Use React.memo, useMemo, and useCallback to prevent unnecessary re-renders. Optimize images (use WebP format, proper sizing, lazy loading). Minimize bundle size. Use debouncing/throttling for frequent events.",
+      "examples": {
+        "bad": [
+          "<img src='large-image.jpg' />",
+          "const Component = () => { const data = expensiveCalculation(); return <div>{data}</div>; }",
+          "onChange={(e) => handleSearch(e.target.value)}"
+        ],
+        "good": [
+          "<img src='large-image.webp' loading='lazy' alt='Description' />",
+          "const Component = () => { const data = useMemo(() => expensiveCalculation(), []); return <div>{data}</div>; }",
+          "const debouncedSearch = useMemo(() => debounce(handleSearch, 300), []); onChange={(e) => debouncedSearch(e.target.value)}"
+        ]
+      }
+    },
+    {
+      "name": "Responsive design",
+      "description": "レスポンシブデザインを実装する。モバイルファーストアプローチを採用し、様々な画面サイズに対応する。",
+      "pattern": "Implement responsive design. Use mobile-first approach. Use relative units (rem, em, %, vw, vh) instead of fixed pixels where appropriate. Use CSS Grid and Flexbox for layouts. Test on multiple screen sizes. Use media queries for breakpoints. Ensure touch targets are at least 44x44px on mobile.",
+      "examples": {
+        "bad": [
+          "width: 800px;",
+          "<div style={{width: '500px'}}>Content</div>",
+          "font-size: 16px;"
+        ],
+        "good": [
+          "width: 100%; max-width: 50rem;",
+          "<div className='responsive-container'>Content</div>",
+          "font-size: 1rem;"
+        ]
+      }
+    },
+    {
+      "name": "Type safety",
+      "description": "TypeScriptを使用する場合は、型安全性を確保する。any型の使用を避け、適切な型定義を行う。",
+      "pattern": "Ensure type safety when using TypeScript. Avoid using 'any' type. Define proper interfaces and types for all data structures. Use strict mode. Type all function parameters and return values. Use type guards for runtime type checking.",
+      "examples": {
+        "bad": [
+          "function processData(data: any) { return data.value; }",
+          "const user = {};",
+          "let count;"
+        ],
+        "good": [
+          "interface Data { value: string; } function processData(data: Data): string { return data.value; }",
+          "interface User { id: number; name: string; } const user: User = { id: 1, name: 'John' };",
+          "let count: number = 0;"
+        ]
+      }
+    },
+    {
+      "name": "Code readability and maintainability",
+      "description": "コードの可読性と保守性を確保する。適切な命名、コメント、関数の分割を行う。",
+      "pattern": "Ensure code readability and maintainability. Use descriptive variable and function names. Write self-documenting code. Add comments for complex logic. Keep functions small and focused (single responsibility principle). Extract reusable code into utilities. Use consistent code formatting.",
+      "examples": {
+        "bad": [
+          "const d = new Date(); const x = d.getTime();",
+          "function doStuff(a, b, c) { /* 100 lines of code */ }",
+          "// TODO: fix this"
+        ],
+        "good": [
+          "const currentDate = new Date(); const timestamp = currentDate.getTime();",
+          "function calculateTotalPrice(items: Item[]): number { return items.reduce((sum, item) => sum + item.price, 0); }",
+          "// Calculate total price including tax for all items in the cart"
+        ]
+      }
+    },
+    {
+      "name": "SEO optimization",
+      "description": "SEOを最適化する。適切なメタタグ、構造化データ、alt属性を使用する。",
+      "pattern": "Optimize for SEO. Use proper meta tags (title, description, keywords). Include Open Graph and Twitter Card meta tags. Use semantic HTML. Add alt attributes to all images. Use proper heading hierarchy (h1-h6). Implement structured data (JSON-LD). Ensure fast page load times. Use descriptive URLs.",
+      "examples": {
+        "bad": [
+          "<img src='photo.jpg' />",
+          "<title>Page</title>",
+          "<div>Heading</div>"
+        ],
+        "good": [
+          "<img src='photo.jpg' alt='Product photo showing blue t-shirt' />",
+          "<title>Blue Cotton T-Shirt - Online Store</title>",
+          "<h1>Product Heading</h1>"
+        ]
+      }
+    },
+    {
+      "name": "Form validation",
+      "description": "フォームの入力検証を実装する。クライアント側とサーバー側の両方で検証を行う。",
+      "pattern": "Implement form validation. Validate inputs on both client and server side. Provide clear, immediate feedback to users. Use HTML5 validation attributes (required, pattern, min, max, etc.). Display validation errors near the relevant fields. Prevent form submission with invalid data.",
+      "examples": {
+        "bad": [
+          "<input type='email' />",
+          "<input type='text' name='age' />",
+          "if (email) { submitForm(); }"
+        ],
+        "good": [
+          "<input type='email' required aria-required='true' aria-invalid={errors.email ? 'true' : 'false'} />",
+          "<input type='number' name='age' min='0' max='120' required />",
+          "if (validateForm()) { await submitForm(); } else { showValidationErrors(); }"
+        ]
+      }
+    },
+    {
+      "name": "Accessibility (a11y)",
+      "description": "アクセシビリティを確保する。キーボードナビゲーション、フォーカス管理、色のコントラスト比を考慮する。",
+      "pattern": "Ensure accessibility. Support keyboard navigation for all interactive elements. Manage focus properly (especially in modals and dynamic content). Maintain sufficient color contrast ratios (WCAG AA: 4.5:1 for text). Provide skip links. Use proper heading hierarchy. Ensure all functionality is available via keyboard. Test with screen readers.",
+      "examples": {
+        "bad": [
+          "<div onClick={handleClick}>Click me</div>",
+          "color: #ccc; background: #fff;",
+          "<div role='button'>Action</div>"
+        ],
+        "good": [
+          "<button onClick={handleClick} onKeyDown={handleKeyDown}>Click me</button>",
+          "color: #333; background: #fff; /* contrast ratio 12.6:1 */",
+          "<button aria-label='Perform action'>Action</button>"
+        ]
+      }
+    }
+  ]
+}
+
