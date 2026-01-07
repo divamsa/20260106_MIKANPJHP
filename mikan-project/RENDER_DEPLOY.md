@@ -75,6 +75,15 @@ URLを共有すれば、誰でもアクセスできます。
 - **RuntimeがDockerになっているか確認**（Settingsタブで確認）
 - **Start Commandが`/start.sh`になっているか確認**（Settingsタブで確認）
 
+### Status 127 エラー（`/start.sh: No such file or directory`）
+**原因**: RenderがDockerを使っていない（Node.jsランタイムを使っている）
+- **解決策1**: RenderのSettingsタブで**Language**を確認
+  - Languageが`Node`になっている場合は、**`Docker`に変更**してください
+  - または、Webサービスを削除して、最初から**Language: Docker**で作成し直してください
+- **解決策2**: **Dockerfile Path**が正しく設定されているか確認
+  - `Dockerfile.render`が設定されているか確認
+  - Root Directoryが`mikan-project`になっているか確認
+
 ### `/usr/bin/supervisord: No such file or directory` エラー
 - RenderのSettingsタブで**Start Command**を確認
 - Start Commandに`/usr/bin/supervisord -c /etc/supervisord.conf`が設定されている場合は、**`/start.sh`に変更**してください
