@@ -1,0 +1,25 @@
+services:
+  - type: web
+    name: mikan-project
+    runtime: docker
+    dockerfilePath: ./Dockerfile.render
+    dockerContext: .
+    plan: free
+    envVars:
+      - key: APP_ENV
+        value: production
+      - key: APP_DEBUG
+        value: false
+      - key: LOG_CHANNEL
+        value: stderr
+      - key: LOG_LEVEL
+        value: error
+    healthCheckPath: /
+    autoDeploy: true
+
+databases:
+  - name: mikan-mysql
+    plan: free
+    databaseName: mikan_project
+    user: mikan_user
+
